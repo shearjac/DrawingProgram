@@ -40,6 +40,35 @@ public class NewSwingUI implements UIContext {
       graphics.drawLine(i1, i2, i3, i4);
     }
   }
+  public void draw(Ellipse ellipse) {
+	  int x = 0;
+	  int y = 0;
+	  int w = 0;
+	  int h = 0;
+	  
+	  float p1x = 0;
+	  float p1y = 0;
+	  float p2x = 0;
+	  float p2y = 0;
+	  
+	  if(ellipse.getPoint1() != null) {
+		  p1x = (float) ellipse.getPoint1().getX();
+		  p1y = (float) ellipse.getPoint1().getY();
+		  if(ellipse.getPoint2() != null) {
+			  p2x = (float) ellipse.getPoint2().getX();
+			  p2y = (float) ellipse.getPoint2().getY();
+			  
+			  x = Math.round( Math.min(p1x, p2x) );
+			  y = Math.round( Math.min(p1y, p2y) );
+			  w = Math.abs( Math.round( Math.max(p1x, p2x) - Math.min(p1x, p2x) ) );
+			  h = Math.abs( Math.round( Math.max(p1y, p2y) - Math.min(p1y, p2y) ) );
+		  } else {
+			  p2x = p1x;
+			  p2y = p1y;
+		  }
+		  graphics.drawOval(x, y, w, h);
+	  }
+  }
   public void draw(Item item) {
     System.out.println( "Cant draw unknown Item \n");
   }
