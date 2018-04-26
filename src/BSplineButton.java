@@ -39,8 +39,8 @@ public class BSplineButton  extends JButton implements ActionListener {
         	view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         	undoManager.endCommand(bSplineCommand);
     	} else {
-    		drawingPanel.repaint();
     		bSplineCommand.setSplinePoint(View.mapPoint(event.getPoint()));
+    		drawingPanel.repaint();
     	}
       }
     }

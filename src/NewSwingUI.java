@@ -80,21 +80,15 @@ public class NewSwingUI implements UIContext {
 			  RenderingHints.VALUE_ANTIALIAS_ON);
 	  g2.setRenderingHints(rh);
 	  
-	  Point lp;
-	  Point tp;
-	  
-	  int lpx, lpy, tpx, tpy;
-	  
-	  for (int i = 1; i < spline.getControlPointQty(); i++) {
-		  lp = spline.getControlPoint(i-1);
-		  tp = spline.getControlPoint(i);
+	  for (int i = 0; i < spline.getControlPointQty()-1; i++) {
+		  int ax, ay, bx, by;
 		  
-		  lpx = Math.round((float)lp.getX());
-		  lpy = Math.round((float)lp.getY());
-		  tpx = Math.round((float)tp.getX());
-		  tpy = Math.round((float)tp.getY());
+		  ax = Math.round((float)spline.getControlPoint(i).getX());
+		  ay = Math.round((float)spline.getControlPoint(i).getY());
+		  bx = Math.round((float)spline.getControlPoint(i+1).getX());
+		  by = Math.round((float)spline.getControlPoint(i+1).getY());
 		  
-		  g2.drawLine(lpx, lpy, tpx, tpy);
+		  g2.drawLine(ax, ay, bx, by);
 	  }
   }
   

@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.Vector;
 public class BSpline extends Item {
-	private static final int PRECISION = 5;
+	private static final int PRECISION = 10;
 	//How many control points between each regular point
 	
 	private Vector<Point> controlPoints = new Vector<>();
@@ -83,16 +83,38 @@ public class BSpline extends Item {
   //Bezier Functions
   private void calculateBezierCurvePoints() {
 	  double t;
-	  Point newPoint;
-	  for (int i = 0; i < points.size(); i++) {
-		  for (int h = 0; h < PRECISION; h++) {
-			  t = ((double)h)/((double)PRECISION);
-			  newPoint = new Point(bezier(t));
-			  setControlPoint(i+h,newPoint);
-		  }
-	  }
+	  double Bx, By;
+	  Point controlPoint;
+	  controlPoints = new Vector<>();
+	 for (int i=1; i < points.size()-1; i++) {
+		 double ax, bx, cx, ay, by, cy;
+		 ax = points.get(i-1).getX();
+		 ay = points.get(i-1).getY();
+		 bx = points.get(i).getX();
+		 by = points.get(i).getY();
+		 cx = points.get(i+1).getX();
+		 cy = points.get(i+1).getY();
+		 
+		 for (int k=0; k < PRECISION; k++) {
+			 t = ((double)k)/((double)PRECISION);
+			 System.out.println(t);
+			 Bx = Math.pow((1.0-t),2)*ax +
+					 2 * (1.0-t) * t * bx +
+					 Math.pow(t,2) * cx;
+			 By = Math.pow((1.0-t),2)*ay +
+					 2 * (1.0-t) * t * by +
+					 Math.pow(t,2) * cy;
+			 controlPoint = new Point((int)Bx, (int)By);
+			 addControlPoint(controlPoint);
+			 System.out.println(controlPoint+"\n");
+			 for( Point p:controlPoints) {
+				 System.out.print(p + ", ");
+			 }
+			 System.out.print("\n");
+		 }
+	 }
   }
-  
+  /**
   private Point bezier(double t) {
 	  Point result;
 	  double px, py;
@@ -124,6 +146,7 @@ public class BSpline extends Item {
 	  System.out.println("New Control Point: " + result);
 	  return result;
   }
+  **/
   
   private long factorial(int x) {
 	  int fact = 1;
