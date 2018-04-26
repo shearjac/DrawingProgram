@@ -1,4 +1,8 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.geom.Point2D;
 public class NewSwingUI implements UIContext {
   private Graphics graphics;
   private static NewSwingUI swingUI;
@@ -69,6 +73,31 @@ public class NewSwingUI implements UIContext {
 		  graphics.drawOval(x, y, w, h);
 	  }
   }
+  
+  public void draw(BSpline spline) {
+	  Graphics2D g2 = (Graphics2D) graphics;
+	  RenderingHints rh = new RenderingHints (RenderingHints.KEY_ANTIALIASING, 
+			  RenderingHints.VALUE_ANTIALIAS_ON);
+	  g2.setRenderingHints(rh);
+	  
+	  Point lp;
+	  Point tp;
+	  
+	  int lpx, lpy, tpx, tpy;
+	  
+	  for (int i = 1; i < spline.getControlPointQty(); i++) {
+		  lp = spline.getControlPoint(i-1);
+		  tp = spline.getControlPoint(i);
+		  
+		  lpx = Math.round((float)lp.getX());
+		  lpy = Math.round((float)lp.getY());
+		  tpx = Math.round((float)tp.getX());
+		  tpy = Math.round((float)tp.getY());
+		  
+		  g2.drawLine(lpx, lpy, tpx, tpy);
+	  }
+  }
+  
   public void draw(Item item) {
     System.out.println( "Cant draw unknown Item \n");
   }
