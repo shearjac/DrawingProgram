@@ -80,13 +80,16 @@ public class NewSwingUI implements UIContext {
 			  RenderingHints.VALUE_ANTIALIAS_ON);
 	  g2.setRenderingHints(rh);
 	  
-	  for (int i = 0; i < spline.getControlPointQty()-1; i++) {
+	  for (int i = 1; i < 100; i++) {
+		  double lt = (double)(i-1)/100.00;
+		  double rt = (double)i/100.00;
 		  int ax, ay, bx, by;
-		  
-		  ax = Math.round((float)spline.getControlPoint(i).getX());
-		  ay = Math.round((float)spline.getControlPoint(i).getY());
-		  bx = Math.round((float)spline.getControlPoint(i+1).getX());
-		  by = Math.round((float)spline.getControlPoint(i+1).getY());
+		  Point curvePoint = spline.getBezierCurvePoint(lt);
+		  ax = Math.round((float)curvePoint.getX());
+		  ay = Math.round((float)curvePoint.getY());
+		  curvePoint = spline.getBezierCurvePoint(rt);
+		  bx = Math.round((float)curvePoint.getX());
+		  by = Math.round((float)curvePoint.getY());
 		  
 		  g2.drawLine(ax, ay, bx, by);
 	  }

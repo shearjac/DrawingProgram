@@ -26,10 +26,6 @@ public class BSplineCommand extends Command {
     	if (spline.getPoint(i) == null) { return false; }
     }
     
-    for (int i = 0; i < spline.getControlPointQty()-1; i++) {
-    	if (spline.getControlPoint(i) == null) { return false; }
-    }
-    
     return true;
   }
 }
