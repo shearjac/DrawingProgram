@@ -4,13 +4,19 @@ public class BSpline extends Item {
 	private static final int PRECISION = 10;
 	//How many control points between each regular point
 	private BezierCurve bc;
+	private Vector<Point> tempPoints;
   
   public BSpline(Point... newPoints) {
     bc = new BezierCurve( newPoints );
+    tempPoints = new Vector<>();
+    for(Point p : newPoints) {
+    	tempPoints.add(p);
+    }
   }
   
   public BSpline() {
 	  bc = new BezierCurve();
+	  tempPoints = new Vector<>();
   }
   
   public boolean includes(Point p1) {
@@ -28,6 +34,7 @@ public class BSpline extends Item {
   
   public void addPoint(Point point) {
 	  bc.addPoint(point);
+	  tempPoints.add(point);
   }
   
   public Point getPoint(int index) {
@@ -36,6 +43,18 @@ public class BSpline extends Item {
   
   public int getPointQty() {
 	  return bc.getSize();
+  }
+  
+  public Point getTemporaryPoint(int index) {
+	  return tempPoints.get(index);
+  }
+  
+  public int getTemporaryPointQty() {
+	  return tempPoints.size();
+  }
+  
+  public void clearTemporaryPoints( ) {
+	  tempPoints = new Vector<>();
   }
   
   public Point getBezierCurvePoint(double t) {

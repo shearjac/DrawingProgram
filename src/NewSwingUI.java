@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -75,14 +76,36 @@ public class NewSwingUI implements UIContext {
   }
   
   public void draw(BSpline spline) {
+	  
+	  Color lastColor = graphics.getColor();
+	  graphics.setColor(Color.BLACK);
+	  Point p1, p2;
+	  Point dotP1, dotP2;
+	  for(int i=0; i<spline.getTemporaryPointQty()-1; i++) {
+	    	p1 = new Point( spline.getTemporaryPoint(i) );
+	    	p2 = new Point( spline.getTemporaryPoint(i+1) );
+	    	
+	    	dotP1 = new Point( Math.round((float)(double)spline.getTemporaryPoint(i).getX()) - 2 , 
+	    			Math.round((float)(double)spline.getTemporaryPoint(i).getY()) - 2 );
+	    	
+	    	dotP2 = new Point( Math.round((float)(double)spline.getTemporaryPoint(i).getX()) + 2 , 
+	    			Math.round((float)(double)spline.getTemporaryPoint(i).getY()) + 2 );
+	    	
+	    	draw(new Ellipse(dotP1, dotP2));
+	    	draw(new Line(p1, p2));
+	    }
+	  graphics.setColor(lastColor);
+	  
 	  Graphics2D g2 = (Graphics2D) graphics;
 	  RenderingHints rh = new RenderingHints (RenderingHints.KEY_ANTIALIASING, 
-			  RenderingHints.VALUE_ANTIALIAS_ON);
+			  RenderingHints.VALUE_ANTIALIAS_OFF);
 	  g2.setRenderingHints(rh);
 	  
-	  for (int i = 1; i < 100; i++) {
-		  double lt = (double)(i-1)/100.00;
-		  double rt = (double)i/100.00;
+	  int prc = spline.getPointQty()*50;
+	  
+	  for (int i = 1; i <= prc; i++) {
+		  double lt = (double)(i-1)/(double)prc;
+		  double rt = (double)i/(double)prc;
 		  int ax, ay, bx, by;
 		  Point curvePoint = spline.getBezierCurvePoint(lt);
 		  ax = Math.round((float)curvePoint.getX());

@@ -22,9 +22,11 @@ public class BSplineCommand extends Command {
     return true;
   }
   public boolean end() {
-    for (int i = 0; i < spline.getPointQty()-1; i++) {
+    for (int i = 0; i < spline.getPointQty(); i++) {
     	if (spline.getPoint(i) == null) { return false; }
     }
+    
+    spline.clearTemporaryPoints();
     
     return true;
   }

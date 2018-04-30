@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.util.Iterator;
 import java.util.Vector;
 
 public class BezierCurve {
@@ -51,7 +52,7 @@ public class BezierCurve {
 			bxv.add(new Vector<>());
 			byv.add(new Vector<>());
 		}
-		for (int i=0; i<getSize(); i++) { //Fill top level with Points
+		for (int i=0; i<getSize(); i++) { //Fill top level (depth 0) with Points
 			bxv.get(0).add(xv.get(i));
 			byv.get(0).add(yv.get(i));
 		}
