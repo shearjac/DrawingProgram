@@ -14,4 +14,17 @@ public abstract class Item implements Serializable {
   public  void render() {
     uiContext.draw(this);
   }
+  private boolean pointVisibility = false;
+  
+  public void showPoints() {
+	  pointVisibility = true;
+  }
+  
+  public void hidePoints() {
+	  pointVisibility = false;
+  }
+  
+  public boolean getPointVisibility() {
+	  return pointVisibility;
+  }
 }

@@ -77,44 +77,42 @@ public class NewSwingUI implements UIContext {
   
   public void draw(BSpline spline) {
 	  
-	  Color lastColor = graphics.getColor();
-	  graphics.setColor(Color.BLACK);
-	  Point p1, p2;
-	  Point dotP1, dotP2;
-	  for(int i=0; i<spline.getTemporaryPointQty()-1; i++) {
-	    	p1 = new Point( spline.getTemporaryPoint(i) );
-	    	p2 = new Point( spline.getTemporaryPoint(i+1) );
-	    	
-	    	dotP1 = new Point( Math.round((float)(double)spline.getTemporaryPoint(i).getX()) - 2 , 
-	    			Math.round((float)(double)spline.getTemporaryPoint(i).getY()) - 2 );
-	    	
-	    	dotP2 = new Point( Math.round((float)(double)spline.getTemporaryPoint(i).getX()) + 2 , 
-	    			Math.round((float)(double)spline.getTemporaryPoint(i).getY()) + 2 );
-	    	
-	    	draw(new Ellipse(dotP1, dotP2));
-	    	draw(new Line(p1, p2));
-	    }
-	  graphics.setColor(lastColor);
+	  if (spline.getPointVisibility()) {
+		  Color lastColor = graphics.getColor();
+		  graphics.setColor(Color.BLACK);
+		  Point p1, p2;
+		  int ix, iy;
+		  Point dotP1, dotP2;
+		  for(int i=0; i<spline.getPointQty(); i++) {
+			  p1 = new Point(spline.getPoint(i));
+			  ix = Math.round((float)p1.getX());
+			  iy = Math.round((float)p1.getY());
+			  graphics.drawRect(ix-5, iy-5, 10, 10);
+		  }
+		  for(int i=0; i<spline.getPointQty()-1; i++) {
+		    	p1 = new Point( spline.getPoint(i) );
+		    	p2 = new Point( spline.getPoint(i+1) );
+		    	draw(new Line(p1, p2));
+		    }
+		  graphics.setColor(lastColor);
+	  }
 	  
-	  Graphics2D g2 = (Graphics2D) graphics;
-	  RenderingHints rh = new RenderingHints (RenderingHints.KEY_ANTIALIASING, 
-			  RenderingHints.VALUE_ANTIALIAS_OFF);
-	  g2.setRenderingHints(rh);
-	  
-	  int prc = spline.getPointQty()*50;
-	  
-	  for (int i = 1; i <= prc; i++) {
-		  double lt = (double)(i-1)/(double)prc;
-		  double rt = (double)i/(double)prc;
-		  int ax, ay, bx, by;
-		  Point curvePoint = spline.getBezierCurvePoint(lt);
-		  ax = Math.round((float)curvePoint.getX());
-		  ay = Math.round((float)curvePoint.getY());
-		  curvePoint = spline.getBezierCurvePoint(rt);
-		  bx = Math.round((float)curvePoint.getX());
-		  by = Math.round((float)curvePoint.getY());
+	  if(spline.getPointQty() >= 3) {
+		  int prc = spline.getPointQty()*50;
 		  
-		  g2.drawLine(ax, ay, bx, by);
+		  for (int i = 1; i <= prc; i++) {
+			  double lt = (double)(i-1)/(double)prc;
+			  double rt = (double)i/(double)prc;
+			  int ax, ay, bx, by;
+			  Point curvePoint = spline.getBezierCurvePoint(lt);
+			  ax = Math.round((float)curvePoint.getX());
+			  ay = Math.round((float)curvePoint.getY());
+			  curvePoint = spline.getBezierCurvePoint(rt);
+			  bx = Math.round((float)curvePoint.getX());
+			  by = Math.round((float)curvePoint.getY());
+			  
+			  graphics.drawLine(ax, ay, bx, by);
+		  }
 	  }
   }
   

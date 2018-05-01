@@ -25,10 +25,12 @@ public class BSplineButton  extends JButton implements ActionListener {
   }
   private class MouseHandler extends MouseAdapter {
     private int pointCount = 0;
+    private Point origin;
     public void mouseClicked(MouseEvent event) {
     if (++pointCount == 1) {
         bSplineCommand = new BSplineCommand();
         bSplineCommand.setSplinePoint(View.mapPoint(event.getPoint()));
+        origin = new Point(View.mapPoint(event.getPoint()));
         undoManager.beginCommand(bSplineCommand);
     } else if (pointCount == 2) {
     	bSplineCommand.setSplinePoint(View.mapPoint(event.getPoint()));
@@ -38,12 +40,17 @@ public class BSplineButton  extends JButton implements ActionListener {
         	drawingPanel.removeMouseListener(this);
         	view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         	undoManager.endCommand(bSplineCommand);
-        	drawingPanel.repaint();
+    	} else if (pointCount >= 4 && event.getPoint().distance(origin) <= 5) {
+    		bSplineCommand.setSplinePoint(origin);
+    		pointCount = 0;
+        	drawingPanel.removeMouseListener(this);
+        	view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        	undoManager.endCommand(bSplineCommand);
     	} else {
     		bSplineCommand.setSplinePoint(View.mapPoint(event.getPoint()));
-    		drawingPanel.repaint();
     	}
       }
+    drawingPanel.repaint();
     }
   }
 }
