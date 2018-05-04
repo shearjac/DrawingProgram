@@ -61,6 +61,22 @@ public class BSpline extends Item {
 	  return bc.calculateCurvePointAt(t);
   }
   
+  private double B0(double t) {
+	  return Math.pow(1.0-t, 3.0) / 6.0;
+  }
+  
+  private double B1(double t) {
+	  return (3.0*Math.pow(t, 3.0) - 6.0*Math.pow(t, 2.0) + 4.0)/6.0;
+  }
+  
+  private double B2(double t) {
+	  return (-(3.0*Math.pow(t, 3.0))+3.0*Math.pow(t,2.0)+3.0*t+1.0)/6.0;
+  }
+  
+  private double B3(double t) {
+	  return Math.pow(t,3.0)/6.0;
+  }
+  
   public String toString() {
 	  String string = "B-Spline between points ";
 	  for(int i=0; i<bc.getSize(); i++) {string = string + bc.getPoint(i).toString() + ", ";};
