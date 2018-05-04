@@ -19,6 +19,10 @@ public class NewSwingUI implements UIContext {
     this.graphics = graphics;
   }
   public void draw(Label label) {
+	  Color stillColor = graphics.getColor();
+	  if (label.getMoving()) {
+		  graphics.setColor(Color.GREEN);
+	  }
     if (label.getStartingPoint() != null) {
       if (label.getText() != null) {
         graphics.drawString(label.getText(), (int) label.getStartingPoint().getX(), (int) label.getStartingPoint().getY());
@@ -36,8 +40,15 @@ public class NewSwingUI implements UIContext {
     }
     int length = graphics.getFontMetrics().stringWidth(label.getText());
     graphics.drawString("_", (int) label.getStartingPoint().getX() + length, (int) label.getStartingPoint().getY());
+    if(label.getMoving()) {
+    	graphics.setColor(stillColor);
+    }
   }
   public void draw(Line line) {
+	  Color stillColor = graphics.getColor();
+	  if (line.getMoving()) {
+		  graphics.setColor(Color.GREEN);
+	  }
     int i1 = 0;
     int i2 = 0;
     int i3 = 0;
@@ -58,8 +69,15 @@ public class NewSwingUI implements UIContext {
 	    
 	    graphics.drawLine(i1, i2, i3, i4);
   }
+    if(line.getMoving()) {
+    	graphics.setColor(stillColor);
+    }
 }
   public void draw(Ellipse ellipse) {
+	  Color stillColor = graphics.getColor();
+	  if (ellipse.getMoving()) {
+		  graphics.setColor(Color.GREEN);
+	  }
 	  int x = 0;
 	  int y = 0;
 	  int w = 0;
@@ -96,10 +114,17 @@ public class NewSwingUI implements UIContext {
 		  h = Math.abs( Math.round( Math.max(p1y, p2y) - Math.min(p1y, p2y) ) );
 		  graphics.drawOval(x, y, w, h);
 	  }
+	  if(ellipse.getMoving()) {
+	    	graphics.setColor(stillColor);
+	    }
 }
   
   
   public void draw(BSpline spline) {
+	  Color stillColor = graphics.getColor();
+	  if (spline.getMoving()) {
+		  graphics.setColor(Color.GREEN);
+	  }
 	  
 	  if (spline.getPointVisibility()) {
 		  Color lastColor = graphics.getColor();
@@ -107,13 +132,13 @@ public class NewSwingUI implements UIContext {
 		  Point p1, p2;
 		  int ix, iy;
 		  Point dotP1, dotP2;
-		  for(int i=0; i<spline.getPointQty(); i++) {
+		  for(int i=0; i<spline.getSize(); i++) {
 			  p1 = new Point(spline.getPoint(i));
 			  ix = Math.round((float)p1.getX());
 			  iy = Math.round((float)p1.getY());
 			  graphics.drawRect(ix-5, iy-5, 10, 10);
 		  }
-		  for(int i=0; i<spline.getPointQty()-1; i++) {
+		  for(int i=0; i<spline.getSize()-1; i++) {
 		    	p1 = new Point( spline.getPoint(i) );
 		    	p2 = new Point( spline.getPoint(i+1) );
 		    	draw(new Line(p1, p2));
@@ -121,23 +146,27 @@ public class NewSwingUI implements UIContext {
 		  graphics.setColor(lastColor);
 	  }
 	  
-	  if(spline.getPointQty() >= 3) {
-		  int prc = spline.getPointQty()*50;
+	  if(spline.getSize() >= 4) {
+		  int prc = spline.getSize()*30;
 		  
-		  for (int i = 1; i <= prc; i++) {
-			  double lt = (double)(i-1)/(double)prc;
-			  double rt = (double)i/(double)prc;
-			  int ax, ay, bx, by;
-			  Point curvePoint = spline.getBezierCurvePoint(lt);
-			  ax = Math.round((float)curvePoint.getX());
-			  ay = Math.round((float)curvePoint.getY());
-			  curvePoint = spline.getBezierCurvePoint(rt);
-			  bx = Math.round((float)curvePoint.getX());
-			  by = Math.round((float)curvePoint.getY());
+		  for (int i = 0; i <= prc-1; i++) {
+			  double t0 = (double)i/(double)prc,
+					 t1 = (double)(i+1)/(double)prc;
 			  
-			  graphics.drawLine(ax, ay, bx, by);
+			  Point p0 = spline.solve(t0),
+					p1 = spline.solve(t1);
+			  
+			  int p0x = Math.round((float)p0.getX()),
+			      p0y = Math.round((float)p0.getY()),
+			      p1x = Math.round((float)p1.getX()),
+			      p1y = Math.round((float)p1.getY());
+			  
+			  graphics.drawLine(p0x, p0y, p1x, p1y);
 		  }
 	  }
+	  if(spline.getMoving()) {
+	    	graphics.setColor(stillColor);
+	    }
   }
   
   public void draw(Item item) {

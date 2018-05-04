@@ -25,4 +25,7 @@ public class Label extends Item {
   public Point getStartingPoint() {
     return startingPoint;
   }
+  public Point getClosestPoint(Point point) {
+	  return startingPoint;
+  }
 }

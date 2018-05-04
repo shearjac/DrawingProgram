@@ -18,12 +18,14 @@ public class SelectButton  extends JButton implements ActionListener {
     selectCommand = new SelectCommand();
     drawingPanel.addMouseListener(mouseHandler);
     undoManager.beginCommand(selectCommand);
+    drawingPanel.repaint();
   }
   private class MouseHandler extends MouseAdapter {
     public void mouseClicked(MouseEvent event) {
       selectCommand.setPoint(View.mapPoint(event.getPoint()));
       drawingPanel.removeMouseListener(this);
       undoManager.endCommand(selectCommand);
+      drawingPanel.repaint();
     }
   }
 }

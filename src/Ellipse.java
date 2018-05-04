@@ -32,5 +32,12 @@ public class Ellipse extends Item {
   public String toString() {
     return "Ellipse  between " + point1 + " and " + point2;
   }
+  public Point getClosestPoint(Point point) {
+	  if (point.distance(this.getPoint1()) <= point.distance(this.getPoint2())) {
+		  return this.getPoint1();
+	  } else {
+		  return this.getPoint2();
+	  }
+  }
 }
 

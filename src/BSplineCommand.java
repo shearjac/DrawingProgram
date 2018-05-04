@@ -21,7 +21,7 @@ public class BSplineCommand extends Command {
     return true;
   }
   public boolean end() {
-    for (int i = 0; i < spline.getPointQty(); i++) {
+    for (int i = 0; i < spline.getSize(); i++) {
     	if (spline.getPoint(i) == null) { return false; }
     }
     spline.hidePoints();

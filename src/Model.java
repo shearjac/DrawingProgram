@@ -60,6 +60,12 @@ public class Model {
   public Enumeration getSelectedItems() {
     return selectedList.elements();
   }
+  public int getItemListSize() {
+	  return itemList.size();
+  }
+  public int getSelectedItemListSize() {
+	  return selectedList.size();
+  }
   // other fields, methods and classes
   public void save(String fileName) {
     try {

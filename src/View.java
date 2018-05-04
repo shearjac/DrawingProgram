@@ -12,6 +12,7 @@ class View extends JFrame {
   private JButton labelButton;
   private JButton ellipseButton;
   private JButton bSplineButton;
+  private JButton moveButton;
   private JButton selectButton;
   private JButton saveButton;
   private JButton openButton;
@@ -96,6 +97,7 @@ class View extends JFrame {
     labelButton = new LabelButton(undoManager, this, drawingPanel);
     ellipseButton = new EllipseButton(undoManager, this, drawingPanel);
     bSplineButton = new BSplineButton(undoManager, this, drawingPanel);
+    moveButton = new MoveButton(undoManager, this, drawingPanel);
     selectButton= new SelectButton(undoManager, this, drawingPanel);
     deleteButton= new DeleteButton(undoManager);
     saveButton= new SaveButton(undoManager, this);
@@ -106,6 +108,7 @@ class View extends JFrame {
     buttonPanel.add(labelButton);
     buttonPanel.add(ellipseButton);
     buttonPanel.add(bSplineButton);
+    buttonPanel.add(moveButton);
     buttonPanel.add(selectButton);
     buttonPanel.add(deleteButton);
     buttonPanel.add(saveButton);

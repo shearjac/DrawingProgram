@@ -27,4 +27,20 @@ public abstract class Item implements Serializable {
   public boolean getPointVisibility() {
 	  return pointVisibility;
   }
+  
+  private boolean beingMoved = false;
+  
+  public void isMoving() {
+	  beingMoved = true;
+  }
+  
+  public void isStill() {
+	  beingMoved = false;
+  }
+  
+  public boolean getMoving() {
+	  return beingMoved;
+  }
+  
+  public abstract Point getClosestPoint(Point point);
 }

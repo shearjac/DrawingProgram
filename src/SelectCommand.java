@@ -11,7 +11,15 @@ public class SelectCommand extends Command {
       if (item.includes(point)) {
         model.markSelected(item);
         break;
-      }
+      } 
+    }
+    Enumeration<Item> items = model.getItems();
+    Enumeration<Item> selectedItems = model.getSelectedItems();
+    while( items.hasMoreElements()) {
+    	items.nextElement().hidePoints();
+    }
+    while( selectedItems.hasMoreElements()) {
+    	selectedItems.nextElement().hidePoints();
     }
   }
   public boolean undo() {
@@ -19,10 +27,15 @@ public class SelectCommand extends Command {
     return true;
   }
   public boolean  redo() {
-    execute();
+	model.markSelected(item);
     return true;
   }
   public void execute() {
-    model.markSelected(item);
+    Enumeration<Item> items = model.getItems();
+    Item item;
+    while( items.hasMoreElements()) {
+    	item = items.nextElement();
+    	item.showPoints();
+    }
   }
 }

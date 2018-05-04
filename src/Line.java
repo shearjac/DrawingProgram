@@ -32,5 +32,12 @@ public class Line extends Item {
   public String toString() {
     return "Line  from " + point1 + " to " + point2;
   }
+  public Point getClosestPoint(Point point) {
+	  Point closestPoint = this.getPoint1();
+	  if (point.distance(this.getPoint2()) < point.distance(this.getPoint2())) {
+		  closestPoint = this.getPoint2();
+	  }
+	  return closestPoint;
+  }
 }
 

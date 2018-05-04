@@ -29,8 +29,8 @@ public class BSplineButton  extends JButton implements ActionListener {
     public void mouseClicked(MouseEvent event) {
     if (++pointCount == 1) {
         bSplineCommand = new BSplineCommand();
-        bSplineCommand.setSplinePoint(View.mapPoint(event.getPoint()));
         origin = new Point(View.mapPoint(event.getPoint()));
+        bSplineCommand.setSplinePoint(origin);
         undoManager.beginCommand(bSplineCommand);
     } else if (pointCount == 2) {
     	bSplineCommand.setSplinePoint(View.mapPoint(event.getPoint()));
